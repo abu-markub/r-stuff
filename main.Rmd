@@ -1,0 +1,39 @@
+---
+title: "UNPOL"
+author: "Freigang"
+date: "5 Nov 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(foreign)
+
+contrib <- as.data.frame(read.csv("UNPOL_contributing.csv"))
+
+## Data from http://www.un.org/en/peacekeeping/publications/unpolmag/unpolmag_09.pdf
+
+
+contrib$total <- contrib$male + contrib$female
+contrib$ratio <- contrib$female / contrib$male
+
+library(ggplot2)
+ggplot(contrib, aes(total, ratio)) + geom_jitter() +geom_text(aes(label=country),hjust=0, vjust=0)
+
+```
+
+
+```{r}
+library(dplyr)
+gender <- filter(contrib, contrib$ratio >= 0.3, contrib$total >= 50)
+
+
+library(ggplot2)
+ggplot(gender, aes(total, ratio)) +theme_light() + geom_jitter() +geom_text(aes(label=country),hjust=0.5, vjust=-0.8) + labs(x="Total personnel contributions to UN police force", y = "Gender ratio [female/male]", title="UNPOL forces", subtitle="Countries contributing more than 50 persons of which at least 30% are female")
+```
+
