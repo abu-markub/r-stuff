@@ -1,6 +1,6 @@
 ---
 title: "UNPOL"
-author: "Freigang"
+author: ""
 date: "5 Nov 2017"
 output:
   pdf_document: default
